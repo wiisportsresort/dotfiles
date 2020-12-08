@@ -1,0 +1,62 @@
+#!/bin/bash
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+config="$XDG_CONFIG_HOME"
+cache="$XDG_CACHE_HOME"
+data="$XDG_DATA_HOME"
+runtime="$XDG_RUNTIME_DIR"
+
+export EDITOR="nvim"
+export TERM="xterm-256color"
+
+export LESSKEY="$config/less/lesskey"
+export LESSHISTFILE="$cache/less/history"
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+export GTK2_RC_FILES="$config/gtk-2.0/gtkrc"
+export WGETRC="$config/wgetrc"
+export WINEPREFIX="$data/wineprefixes/default"
+export ZDOTDIR="$config/zsh"
+
+export XINITRC="$config/X11/xinitrc"
+export XSERVERRC="$config/X11/xserverrc"
+export XAUTHORITY="$runtime/Xauthority"
+export XCOMPOSEFILE="$config/X11/xcompose"
+export XCOMPOSECACHE="$cache/X11/xcompose"
+
+export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=\"$config/java\""
+export GOPATH="$data/go"
+export GRADLE_USER_HOME="$data/gradle"
+export CARGO_HOME="$data/cargo"
+export RUSTUP_HOME="$data/rustup"
+export NODE_REPL_HISTORY="$data/node_repl_history"
+export TS_NODE_REPL_HISTORY="$data/ts_node_repl_history"
+export NPM_CONFIG_USERCONFIG="$config/npm/npmrc"
+
+export ANDROID_SDK_HOME="$config/android"
+export ANDROID_AVD_HOME="$data/android"
+export ANDROID_EMULATOR_HOME="$data/android"
+export ADB_VENDOR_KEY="$config/android"
+
+export PSQLRC="$config/pg/psqlrc"
+export PSQL_HISTORY="$cache/pg/psql_history"
+export PGPASSFILE="$config/pg/pgpass"
+export PGSERVICEFILE="$config/pg/pg_service.conf"
+
+folders="
+$config
+$cache
+$data
+$cache/less
+$cache/maven/repository
+$cache/X11
+$cache/pg
+$config/pg
+$data/wineprefixes
+"
+
+for f in $folders; do
+  mkdir -p "$f"
+done

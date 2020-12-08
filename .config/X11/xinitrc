@@ -1,0 +1,33 @@
+#!/bin/sh
+
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+x11c="$XDG_CONFIG_HOME/X11"
+
+[ -f "$x11c/xresources" ] && xrdb -merge "$x11c/xresources"
+[ -f "$x11c/xmodmap" ] && xmodmap "$x11c/xmodmap"
+[ -f "$x11c/xprofile" ] && . "$x11c/xprofile"
+[ -f "$x11c/xsession" ] && . "$x11c/xsession"
+
+/usr/lib/polkit-kde-authentication-agent-1 &
+
+eval $(ssh-agent)
+export SSH_AUTH_SOCK
+
+setxkbmap -option compose:ralt
+
+session=${1:-awesome}
+
+case $session in
+i3 | i3wm) exec i3 ;;
+kde | plasma) exec startplasma-x11 ;;
+awesome | awesomewm) exec awesome ;;
+gnome) exec gnome-session ;;
+# No known session, try to run it as command
+*) exec $1 ;;
+esac
